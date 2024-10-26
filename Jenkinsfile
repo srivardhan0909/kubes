@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        // Set the path to the kubeconfig file for Minikube
+        KUBECONFIG = "${HOME}/.kube/config" // Adjust this path if necessary
+    }
 
     stages {
         stage('Build Docker Image') {
