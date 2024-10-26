@@ -1,45 +1,28 @@
 pipeline {
-    agent any
-    environment {
-        // Set the path to the kubeconfig file for Minikube
-        KUBECONFIG = "C:\\Users\\vijayrubika\\.kube\\config" // Adjust this path if necessary
-    }
+    agent any 
 
     stages {
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
                 script {
-                    // Build Docker image with a unique tag based on build number
-                    dockerImage = docker.build("wilsonbolledula/maven:${env.BUILD_NUMBER}", ".")
+                    // Build your Docker image
+                    bat 'docker build -t my-nodejs-app .'
                 }
             }
         }
-
-        stage('Push to DockerHub') {
+        stage('Test') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        // Push Docker image to Docker Hub
-                        dockerImage.push()
-                    }
+                    // Run tests here if you have any
+                    echo 'Running tests...'
                 }
             }
         }
-
-        stage('Deploy to Kubernetes') {
+        stage('Deploy') {
             steps {
                 script {
-                    // Deploy the Docker image to Kubernetes
-                    echo 'Deploying application to Kubernetes...'
-
-                    // Use the dynamically tagged image for deployment
-                    def imageName = "wilsonbolledula/maven:${env.BUILD_NUMBER}"
-
-                    // Apply the Kubernetes deployment YAML
-                    bat 'kubectl apply -f node-app-deployment.yaml'
-                    
-                    // Set the image in the Kubernetes deployment
-                    bat 'kubectl set image deployment/my-kube-deployment app-container=wilsonbolledula/maven:6 --record'
+                    // Deploy your Docker image
+                    echo 'Deploying application...'
                 }
             }
         }
