@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-kube-deployment
+  labels:
+    app: my-kube-app
+spec:
+  replicas: 2  # Number of replicas
+  selector:
+    matchLabels:
+      app: my-kube-app
+  template:
+    metadata:
+      labels:
+        app: my-kube-app
+    spec:
+      containers:
+        - name: my-kube-container
+          image: wilsonbolledula/my-kube:latest  # Your Docker image
+          ports:
+            - containerPort: 3000  # The port where the Node.js app is listening
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: NODE_ENV
+              value: "production"
