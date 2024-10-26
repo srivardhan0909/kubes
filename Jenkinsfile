@@ -39,7 +39,7 @@ pipeline {
                     bat 'kubectl apply -f node-app-deployment.yaml'
                     
                     // Set the image in the Kubernetes deployment
-                    bat 'kubectl set image deployment/my-kube-deployment my-container=wilsonbolledula/maven:3 --record'
+                    bat 'kubectl set image deployment/my-kube-deployment app-container=wilsonbolledula/maven:6 --record'
                 }
             }
         }
