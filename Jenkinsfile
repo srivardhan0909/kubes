@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Build your Docker image
-                    bat 'docker build -t my-nodejs-app .'
+                  sh 'docker build -t my-nodejs-app .'
                 }
             }
         }
